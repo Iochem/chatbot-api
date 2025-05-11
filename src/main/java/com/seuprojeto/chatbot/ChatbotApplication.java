@@ -1,9 +1,14 @@
 package com.seuprojeto.chatbot;
 
+import java.util.Scanner;
+
 public class ChatbotApplication {
     public static void main(String[] args) {
         System.out.println("🤖 Chatbot: Olá! Como posso ajudar você?");
         System.out.println("Digite 'sair' caso queira encerrar o atendimento");
+
+        //Iniciar o Scanner
+        Scanner scanner = new Scanner(System.in);
 
         // Dados de horários disponíveis
         String[][] escolher = {
@@ -17,5 +22,15 @@ public class ChatbotApplication {
                 "Pezinho: R$10,00"
         };
 
+        String input;
+
+        System.out.print("Você: ");
+        input = scanner.nextLine().toLowerCase();
+
+
+        System.out.println("🤖 Chatbot: Desculpe, não entendi.");
+
+        //Fechar o Scanner
+        scanner.close();
     }
 }
