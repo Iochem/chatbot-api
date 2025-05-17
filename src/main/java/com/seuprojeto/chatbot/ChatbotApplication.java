@@ -26,24 +26,48 @@ public class ChatbotApplication {
 
         while(true){
             System.out.print("Você: ");
-            input = scanner.nextLine().toLowerCase();
+            input = scanner.nextLine().toLowerCase(); // Converte a entrada para minúsculas
+
+            // Respostas pré-definidas
             if (input.contains("agendar") || input.contains("marcar") || input.contains("horário")) {
                 System.out.println("🤖 Chatbot: Temos os seguintes dias e horários disponíveis:");
-                for (String[] linha : escolher) {
-                    System.out.print(linha[0] + ": ");
+                for (String[] linha : escolher) { //For para percorrer a matrix
+                    System.out.print(linha[0] + ": "); //Mostrar só os dias
                     for (int i = 1; i < linha.length; i++) {
-                        System.out.print(linha[i] + " ");
+                        System.out.print(linha[i] + " "); // Mostrar só os horários
                     }
                     System.out.println();
                 }
+                System.out.println("\nDigite um dia e horário (ex: 'Dia 3 14h00') para marcar: ");
+                System.out.print("Você:");
+                String escolha = scanner.nextLine().toLowerCase().trim();
+                boolean encontrado = false;
+                for(String[] linha : escolher){ // o for vai percorrer toda a matriz
+                    String dia = linha[0].toLowerCase().trim();
+                    for(int i = 1;i < linha.length; i++ ){
+                        String hora = linha[i].toLowerCase().trim();
+                        if (escolha.equals(dia + " " + hora)) {
+                            encontrado = true;
+                            break;//Sai do loop interno
+                        }
+                    }
+                    if (encontrado) break; // Sai do for externo também
+                }
+
+                if (encontrado) {
+                    System.out.println("✅ Agendamento confirmado para " + escolha);
+
+
+                }else {
+                    System.out.println("❌ Horário  ou dia não disponível.");
+                }
+
+            }else{
+                System.out.println("🤖 Chatbot: Desculpe, não entendi.");
             }
-            // Aqui ainda não há respostas
-            System.out.println("🤖 Chatbot: Desculpe, não entendi.");
+
+
         }
-
-
-
-        //Fechar o Scanner
-        scanner.close();
+        //scanner.close();
     }
 }
