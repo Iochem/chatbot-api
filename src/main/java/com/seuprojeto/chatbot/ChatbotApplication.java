@@ -62,6 +62,11 @@ public class ChatbotApplication {
                     System.out.println("❌ Horário  ou dia não disponível.");
                 }
 
+            } else if (input.contains("preço") || input.contains("valor")) {
+                System.out.println("🤖 Chatbot: os preços são: ");
+                for (String num : corte) {
+                    System.out.println(num);
+                }
             }else{
                 System.out.println("🤖 Chatbot: Desculpe, não entendi.");
             }
