@@ -67,12 +67,16 @@ public class ChatbotApplication {
                 for (String num : corte) {
                     System.out.println(num);
                 }
-            }else{
+            } else if (input.contains("tchau") || input.contains("sair")) {
+                System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!");
+                break;
+            }
+            else{
                 System.out.println("🤖 Chatbot: Desculpe, não entendi.");
             }
 
 
         }
-        //scanner.close();
+        scanner.close();
     }
 }
