@@ -22,6 +22,13 @@ public class ChatbotApplication {
                 "Pezinho: R$10,00"
         };
 
+        //Cliente informa nome para o cadastro
+        System.out.print("Digite seu nome: ");
+        String nomeCliente = scanner.nextLine();
+
+        System.out.println("🤖 Chatbot: Olá, " + nomeCliente + "! Em que posso ajudar?");
+        System.out.println("Digite 'sair' caso queira encerrar o atendimento");
+
         String input;
 
         while(true){
@@ -62,13 +69,13 @@ public class ChatbotApplication {
                     System.out.println("❌ Horário  ou dia não disponível.");
                 }
 
-            } else if (input.contains("preço") || input.contains("valor")) {
+            } else if (input.contains("preço") || input.contains("valor") | input.contains("cortes")) {
                 System.out.println("🤖 Chatbot: os preços são: ");
                 for (String num : corte) {
                     System.out.println(num);
                 }
             } else if (input.contains("tchau") || input.contains("sair")) {
-                System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!");
+                System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!" + nomeCliente);
                 break;
             }
             else{
@@ -77,6 +84,7 @@ public class ChatbotApplication {
 
 
         }
+        //Fechar o scanner
         scanner.close();
     }
 }
