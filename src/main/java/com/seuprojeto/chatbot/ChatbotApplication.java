@@ -26,6 +26,9 @@ public class ChatbotApplication {
         System.out.print("Digite seu nome: ");
         String nomeCliente = scanner.nextLine();
 
+        //Criar o objeto de cliente
+        Cliente cliente = new Cliente(nomeCliente);
+
         System.out.println("🤖 Chatbot: Olá, " + nomeCliente + "! Em que posso ajudar?");
         System.out.println("Digite 'sair' caso queira encerrar o atendimento");
 
@@ -55,6 +58,9 @@ public class ChatbotApplication {
                         String hora = linha[i].toLowerCase().trim();
                         if (escolha.equals(dia + " " + hora)) {
                             encontrado = true;
+
+                            //Adicionar escolha ao cliente, caso horário esteja disponível
+                            cliente.setHorarioMarcado(escolha);
                             break;//Sai do loop interno
                         }
                     }
@@ -62,7 +68,8 @@ public class ChatbotApplication {
                 }
 
                 if (encontrado) {
-                    System.out.println("✅ Agendamento confirmado para " + escolha);
+                    System.out.println("✅ Agendamento confirmado para " + cliente.getHorarioMarcado());
+
 
 
                 }else {
@@ -75,7 +82,7 @@ public class ChatbotApplication {
                     System.out.println(num);
                 }
             } else if (input.contains("tchau") || input.contains("sair")) {
-                System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!" + nomeCliente);
+                System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!" + cliente.getNome());
                 break;
             }
             else{
