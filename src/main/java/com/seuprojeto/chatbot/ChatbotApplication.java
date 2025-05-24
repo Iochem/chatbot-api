@@ -10,17 +10,6 @@ public class ChatbotApplication {
         //Iniciar o Scanner
         Scanner scanner = new Scanner(System.in);
 
-        // Dados de horários disponíveis
-        String[][] escolher = {
-                {"Dia 3", "14h00", "15h00", "16h00"},
-                {"Dia 6", "13h00", "14h10", "17h00"}
-        };
-
-        // Dados de preços dos cortes
-        String[] corte = {
-                "Corte simples: R$16,00",
-                "Pezinho: R$10,00"
-        };
 
         //Cliente informa nome para o cadastro
         System.out.print("Digite seu nome: ");
@@ -28,6 +17,10 @@ public class ChatbotApplication {
 
         //Criar o objeto de cliente
         Cliente cliente = new Cliente(nomeCliente);
+
+        //Intanciar a classe dados
+        Dados dados = new Dados();
+
 
         System.out.println("🤖 Chatbot: Olá, " + nomeCliente + "! Em que posso ajudar?");
         System.out.println("Digite 'sair' caso queira encerrar o atendimento");
@@ -41,18 +34,16 @@ public class ChatbotApplication {
             // Respostas pré-definidas
             if (input.contains("agendar") || input.contains("marcar") || input.contains("horário")) {
                 System.out.println("🤖 Chatbot: Temos os seguintes dias e horários disponíveis:");
-                for (String[] linha : escolher) { //For para percorrer a matrix
-                    System.out.print(linha[0] + ": "); //Mostrar só os dias
-                    for (int i = 1; i < linha.length; i++) {
-                        System.out.print(linha[i] + " "); // Mostrar só os horários
-                    }
-                    System.out.println();
-                }
+                dados.mostrarDiasHorarios();
+
                 System.out.println("\nDigite um dia e horário (ex: 'Dia 3 14h00') para marcar: ");
                 System.out.print("Você:");
                 String escolha = scanner.nextLine().toLowerCase().trim();
                 boolean encontrado = false;
-                for(String[] linha : escolher){ // o for vai percorrer toda a matriz
+
+                // trazer para aqui o DiaHorario
+               String[][] diaHorario = dados.diaHorario;
+                for(String[] linha : diaHorario){ // o for vai percorrer toda a matriz
                     String dia = linha[0].toLowerCase().trim();
                     for(int i = 1;i < linha.length; i++ ){
                         String hora = linha[i].toLowerCase().trim();
@@ -61,10 +52,10 @@ public class ChatbotApplication {
 
                             //Adicionar escolha ao cliente, caso horário esteja disponível
                             cliente.setHorarioMarcado(escolha);
-                            break;//Sai do loop interno
+                            break;
                         }
                     }
-                    if (encontrado) break; // Sai do for externo também
+                    if (encontrado) break;
                 }
 
                 if (encontrado) {
@@ -78,9 +69,9 @@ public class ChatbotApplication {
 
             } else if (input.contains("preço") || input.contains("valor") | input.contains("cortes")) {
                 System.out.println("🤖 Chatbot: os preços são: ");
-                for (String num : corte) {
-                    System.out.println(num);
-                }
+                dados.mostrarCortes();
+
+
             } else if (input.contains("tchau") || input.contains("sair")) {
                 System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!" + cliente.getNome());
                 break;
