@@ -42,32 +42,24 @@ public class ChatbotApplication {
                 boolean encontrado = false;
 
                 // trazer para aqui o DiaHorario
-               String[][] diaHorario = dados.diaHorario;
-                for(String[] linha : diaHorario){ // o for vai percorrer toda a matriz
-                    String dia = linha[0].toLowerCase().trim();
-                    for(int i = 1;i < linha.length; i++ ){
-                        String hora = linha[i].toLowerCase().trim();
-                        if (escolha.equals(dia + " " + hora)) {
-                            encontrado = true;
-
-                            //Adicionar escolha ao cliente, caso horário esteja disponível
+                for(String chave : dados.diaHorario.keySet()){
+                    for(String valor : dados.diaHorario.get(chave)){
+                        if(escolha.equalsIgnoreCase(chave + " " + valor)){
                             cliente.setHorarioMarcado(escolha);
+                            encontrado = true;
                             break;
                         }
                     }
-                    if (encontrado) break;
+                if (encontrado) break;
                 }
 
                 if (encontrado) {
                     System.out.println("✅ Agendamento confirmado para " + cliente.getHorarioMarcado());
-
-
-
                 }else {
                     System.out.println("❌ Horário  ou dia não disponível.");
                 }
 
-            } else if (input.contains("preço") || input.contains("valor") | input.contains("cortes")) {
+            } else if (input.contains("preço") || input.contains("valor") || input.contains("cortes")) {
                 System.out.println("🤖 Chatbot: os preços são: ");
                 dados.mostrarCortes();
 

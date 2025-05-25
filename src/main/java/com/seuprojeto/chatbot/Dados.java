@@ -1,29 +1,42 @@
 package com.seuprojeto.chatbot;
 
-public class Dados {
-    public String[][] diaHorario = {
-            {"Dia 3", "14h00", "15h00", "16h00"}, //linha.length == 4
-            {"Dia 6", "13h00", "14h10", "17h00"}  //linha.length == 4
-    };
-    public String[] corte = {
-            "Corte simples: R$16,00",
-            "Pezinho: R$10,00"
-    };
+import java.util.*;
 
-    //Método para mostrar os dias e horários disponíveis
+public class Dados {
+    public Map<String, List<String>> diaHorario = new HashMap<>();
+    public List<String> cortes = new ArrayList<>();
+
+    public Dados() {
+        inicializarDados();
+        inicializarCortes();
+    }
+
+    public void inicializarDados(){
+        diaHorario.put("Dia 3", Arrays.asList("14h00", "15h00", "16h00"));
+        diaHorario.put("Dia 4", Arrays.asList("13h00", "16h00", "17h00"));
+    }
+    public void inicializarCortes(){
+        cortes.add("Corte simples");
+        cortes.add("Corte com navalha");
+        cortes.add("Barba");
+    }
+
+    //Metodo para mostrar os dias e horários disponíveis
     public void mostrarDiasHorarios(){
-        for (String[] linha : diaHorario) { //For para percorrer a matrix
-            System.out.print(linha[0] + ": "); //Mostrar só os dias
-            for (int i = 1; i < linha.length; i++) {
-                System.out.print(linha[i] + " "); // Mostrar só os horários
+        for(String a: diaHorario.keySet()){
+            System.out.print(a + " : "); //Vai imprimir só os dias
+            for(String b : diaHorario.get(a)){
+                System.out.print( b + " ");//Vai imprimir só os horários
             }
-            System.out.println();//Para pular linha
+            System.out.println("  ");//Para pular linha a cada impressão
+        }  }
+
+    //Metodo para mostrar os cortes
+    public void mostrarCortes(){
+        for(String num : cortes){
+            System.out.println(num);
         }
     }
-
-    //Método para mostrar os cortes
-    public void mostrarCortes(){
-        for(String num : corte){ //Para a lista pular linha
-            System.out.println(num);}
-    }
 }
+
+
