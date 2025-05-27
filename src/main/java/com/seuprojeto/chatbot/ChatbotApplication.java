@@ -1,6 +1,7 @@
 package com.seuprojeto.chatbot;
 
 import com.seuprojeto.chatbot.entity.ClienteEntity;
+import com.seuprojeto.chatbot.repository.DadosRepository;
 import java.util.Scanner;
 
 public class ChatbotApplication {
@@ -20,7 +21,7 @@ public class ChatbotApplication {
         ClienteEntity clienteEntity = new ClienteEntity(nomeCliente);
 
         //Intanciar a classe dados
-        Dados dados = new Dados();
+        DadosRepository dadosRepository = new DadosRepository();
 
 
         System.out.println("🤖 Chatbot: Olá, " + nomeCliente + "! Em que posso ajudar?");
@@ -35,7 +36,7 @@ public class ChatbotApplication {
             // Respostas pré-definidas
             if (input.contains("agendar") || input.contains("marcar") || input.contains("horário")) {
                 System.out.println("🤖 Chatbot: Temos os seguintes dias e horários disponíveis:");
-                dados.mostrarDiasHorarios();
+                dadosRepository.mostrarDiasHorarios();
 
                 System.out.println("\nDigite um dia e horário (ex: 'Dia 3 14h00') para marcar: ");
                 System.out.print("Você:");
@@ -43,8 +44,8 @@ public class ChatbotApplication {
                 boolean encontrado = false;
 
                 // trazer para aqui o DiaHorario
-                for(String chave : dados.diaHorario.keySet()){
-                    for(String valor : dados.diaHorario.get(chave)){
+                for(String chave : dadosRepository.getDiaHorario().keySet()){
+                    for(String valor : dadosRepository.getDiaHorario().get(chave)){
                         if(escolha.equalsIgnoreCase(chave + " " + valor)){
                             clienteEntity.setHorarioMarcado(escolha);
                             encontrado = true;
@@ -62,7 +63,7 @@ public class ChatbotApplication {
 
             } else if (input.contains("preço") || input.contains("valor") || input.contains("cortes")) {
                 System.out.println("🤖 Chatbot: os preços são: ");
-                dados.mostrarCortes();
+                dadosRepository.mostrarCortes();
 
 
             } else if (input.contains("tchau") || input.contains("sair")) {
