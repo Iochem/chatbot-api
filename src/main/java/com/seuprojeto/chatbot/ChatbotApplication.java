@@ -1,5 +1,6 @@
 package com.seuprojeto.chatbot;
 
+import com.seuprojeto.chatbot.entity.ClienteEntity;
 import java.util.Scanner;
 
 public class ChatbotApplication {
@@ -16,7 +17,7 @@ public class ChatbotApplication {
         String nomeCliente = scanner.nextLine();
 
         //Criar o objeto de cliente
-        Cliente cliente = new Cliente(nomeCliente);
+        ClienteEntity clienteEntity = new ClienteEntity(nomeCliente);
 
         //Intanciar a classe dados
         Dados dados = new Dados();
@@ -45,7 +46,7 @@ public class ChatbotApplication {
                 for(String chave : dados.diaHorario.keySet()){
                     for(String valor : dados.diaHorario.get(chave)){
                         if(escolha.equalsIgnoreCase(chave + " " + valor)){
-                            cliente.setHorarioMarcado(escolha);
+                            clienteEntity.setHorarioMarcado(escolha);
                             encontrado = true;
                             break;
                         }
@@ -54,7 +55,7 @@ public class ChatbotApplication {
                 }
 
                 if (encontrado) {
-                    System.out.println("✅ Agendamento confirmado para " + cliente.getHorarioMarcado());
+                    System.out.println("✅ Agendamento confirmado para " + clienteEntity.getHorarioMarcado());
                 }else {
                     System.out.println("❌ Horário  ou dia não disponível.");
                 }
@@ -65,7 +66,7 @@ public class ChatbotApplication {
 
 
             } else if (input.contains("tchau") || input.contains("sair")) {
-                System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!" + cliente.getNome());
+                System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!" + clienteEntity.getNome());
                 break;
             }
             else{
