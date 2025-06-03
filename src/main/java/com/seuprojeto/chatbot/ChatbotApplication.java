@@ -2,6 +2,8 @@ package com.seuprojeto.chatbot;
 
 import com.seuprojeto.chatbot.entity.ClienteEntity;
 import com.seuprojeto.chatbot.repository.DadosRepository;
+import com.seuprojeto.chatbot.service.AgendamentoService;
+
 import java.util.Scanner;
 
 public class ChatbotApplication {
@@ -23,6 +25,8 @@ public class ChatbotApplication {
         //Intanciar a classe dados
         DadosRepository dadosRepository = new DadosRepository();
 
+        AgendamentoService agendamentoService = new AgendamentoService(dadosRepository);
+
 
         System.out.println("🤖 Chatbot: Olá, " + nomeCliente + "! Em que posso ajudar?");
         System.out.println("Digite 'sair' caso queira encerrar o atendimento");
@@ -41,21 +45,11 @@ public class ChatbotApplication {
                 System.out.println("\nDigite um dia e horário (ex: 'Dia 3 14h00') para marcar: ");
                 System.out.print("Você:");
                 String escolha = scanner.nextLine().toLowerCase().trim();
-                boolean encontrado = false;
-
-                // trazer para aqui o DiaHorario
-                for(String chave : dadosRepository.getDiaHorario().keySet()){
-                    for(String valor : dadosRepository.getDiaHorario().get(chave)){
-                        if(escolha.equalsIgnoreCase(chave + " " + valor)){
-                            clienteEntity.setHorarioMarcado(escolha);
-                            encontrado = true;
-                            break;
-                        }
-                    }
-                if (encontrado) break;
-                }
+                agendamentoService.validarDiaHorario(escolha);
+                boolean encontrado = agendamentoService.validarDiaHorario(escolha);
 
                 if (encontrado) {
+                    clienteEntity.setHorarioMarcado(escolha);
                     System.out.println("✅ Agendamento confirmado para " + clienteEntity.getHorarioMarcado());
                 }else {
                     System.out.println("❌ Horário  ou dia não disponível.");
