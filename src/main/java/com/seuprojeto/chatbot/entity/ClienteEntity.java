@@ -5,7 +5,7 @@ import java.util.UUID;
 import jakarta.persistence.Entity;
 
 @Entity
-public class ClienteEntity {
+public class ClienteEntity { //Classe que vai receber o nome e o horarioMarcado
     //@Id
     private final UUID id;
     private String nome;
