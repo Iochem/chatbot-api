@@ -1,6 +1,7 @@
 package com.seuprojeto.chatbot;
 
 import com.seuprojeto.chatbot.entity.ClienteEntity;
+import com.seuprojeto.chatbot.repository.ClienteRepository;
 import com.seuprojeto.chatbot.repository.DadosRepository;
 import com.seuprojeto.chatbot.service.AgendamentoService;
 
@@ -26,6 +27,10 @@ public class ChatbotApplication {
         DadosRepository dadosRepository = new DadosRepository();
 
         AgendamentoService agendamentoService = new AgendamentoService(dadosRepository);
+
+        //Instanciar a classe ClienteRepository
+        ClienteRepository clienteRepository = new ClienteRepository();
+
 
 
         System.out.println("🤖 Chatbot: Olá, " + nomeCliente + "! Em que posso ajudar?");
