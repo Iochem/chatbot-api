@@ -16,13 +16,8 @@ public class ChatbotApplication {
         //Iniciar o Scanner
         Scanner scanner = new Scanner(System.in);
 
-
-        //Cliente informa nome para o cadastro
-        System.out.print("Digite seu nome: ");
-        String nomeCliente = scanner.nextLine();
-
-        //Criar o objeto de cliente
-        ClienteEntity clienteEntity = new ClienteEntity(nomeCliente);
+        //Iniciar a instanciação do ClienteEntity
+        ClienteEntity clienteEntity = null;
 
         //Intanciar a classe dados
         DadosRepository dadosRepository = new DadosRepository();
@@ -37,7 +32,7 @@ public class ChatbotApplication {
         ClienteService clienteService = new ClienteService(clienteRepository);
 
 
-        System.out.println("🤖 Chatbot: Olá, " + nomeCliente + "! Em que posso ajudar?");
+        System.out.println("🤖 Chatbot: Olá! Em que posso ajudar?");
         System.out.println("Digite 'sair' caso queira encerrar o atendimento");
 
         String input;
@@ -52,6 +47,9 @@ public class ChatbotApplication {
                 dadosRepository.mostrarDiasHorarios();
 
             }else if (input.contains("marcar") || input.contains("agendar")  ) {
+                System.out.print("Informe seu nome: ");
+                String nomeCliente = scanner.nextLine().trim().toLowerCase();
+
                 //Verifica se o método do ClienteService retorna true
                 while(true){
                     System.out.println("\nDigite um dia e horário (ex: 'Dia 3 14h00') para marcar:");
@@ -76,6 +74,8 @@ public class ChatbotApplication {
                     }
 
                     // 3º: Tudo certo, agenda
+                    //Criar o objeto de ClienteEntity com o nome e esolha
+                    clienteEntity = new ClienteEntity(nomeCliente);
                     clienteEntity.setHorarioMarcado(escolha);
                     clienteService.adicionarCliente(nomeCliente, escolha);
 
@@ -88,6 +88,7 @@ public class ChatbotApplication {
 
 
             } else if (input.contains("tchau") || input.contains("sair")) {
+                assert clienteEntity != null;
                 System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!" + clienteEntity.getNome());
                 break;
             }
