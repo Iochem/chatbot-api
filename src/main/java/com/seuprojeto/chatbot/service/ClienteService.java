@@ -29,5 +29,27 @@ public class ClienteService {
     public void adicionarCliente(String nome, String horarioMarcado){
         clienteRepository.agendarCliente(nome, horarioMarcado);
     }
+
+    //Verifica se agendamento existe no map para ver se pode exclui-lo
+    public boolean verificarExistenciaAgendamento(String cancelarAgendamento){
+        Map<String, String> clientesAgendados = clienteRepository.getClientesAgendados();
+
+        String[] partes = cancelarAgendamento.split(" ");
+        if (partes.length < 4) {
+            System.out.println("Entrada inválida.");
+            return false;
+        }
+        //Divide em partess
+        String nomeCancelamento = partes[0];
+        String horarioCancelamento = "Dia " + partes[2] + " " + partes[3];
+
+        for(Map.Entry<String, String> entry : clientesAgendados.entrySet()){
+            if(entry.getKey().equalsIgnoreCase(nomeCancelamento) && entry.getValue().equalsIgnoreCase(horarioCancelamento)){
+                clienteRepository.removerCliente(nomeCancelamento, horarioCancelamento);
+                return true; //Agendamento encontrado
+            }}
+        return false; //Agendameno não encontrado
+    }
+
 }
 

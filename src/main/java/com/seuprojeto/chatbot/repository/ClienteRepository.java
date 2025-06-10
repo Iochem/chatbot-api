@@ -18,6 +18,11 @@ public class ClienteRepository {
         clientesAgendados.put(nome, horarioMarcado);
     }
 
+    //Remove agendamento do map
+    public void removerCliente(String nome, String horarioCancelamento){
+        clientesAgendados.remove(nome);;
+    }
+
     // Opcional: retorna o mapa completo (para testes)
     public Map<String, String> getClientesAgendados() {
         return clientesAgendados;

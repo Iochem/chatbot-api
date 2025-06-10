@@ -3,6 +3,8 @@ package com.seuprojeto.chatbot.entity;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
+//import lombok.Getter;
+
 
 @Entity
 public class ClienteEntity { //Classe que vai receber o nome e o horarioMarcado

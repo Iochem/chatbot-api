@@ -52,8 +52,10 @@ public class ChatbotApplication {
 
                 //Verifica se o método do ClienteService retorna true
                 while(true){
-                    System.out.println("\nDigite um dia e horário (ex: 'Dia 3 14h00') para marcar:");
+                    System.out.println("\nDigite um dia e horário (ex: 'Dia 3 14h00') para marcar (ou 'voltar') para retornar ao menu: ");
                     String escolha = scanner.nextLine().toLowerCase().trim();
+
+                    if (escolha.equals("voltar")) break;
 
                     clienteService.validarCliente(nomeCliente, escolha);
                     agendamentoService.validarDiaHorario(escolha);
@@ -82,10 +84,22 @@ public class ChatbotApplication {
                     System.out.println("✅ Agendamento confirmado para " + clienteEntity.getHorarioMarcado());
                     break;
                 }
+            } else if (input.contains("cancelar")) {
+                System.out.println("🤖 Chatbot: Informe o cliente e o horário agendado (Ex: Ana Dia 3 14h00):");
+                String cancelarAgendamento = scanner.nextLine().toLowerCase().trim();
+
+
+                boolean cancelamentoFeito = clienteService.verificarExistenciaAgendamento(cancelarAgendamento);
+                // Se retornar true cancela
+                if (cancelamentoFeito) {
+                    System.out.println("🤖 Chatbot: Agendamento " + cancelarAgendamento + " cancelado");
+                } else {
+                    System.out.println("🤖 Chatbot: Agendamento não encontrado no sistema");
+                }
+
             } else if (input.contains("preço") || input.contains("valor") || input.contains("cortes")) {
                 System.out.println("🤖 Chatbot: os preços são: ");
                 dadosRepository.mostrarCortes();
-
 
             } else if (input.contains("tchau") || input.contains("sair")) {
                 assert clienteEntity != null;
