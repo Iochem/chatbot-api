@@ -108,8 +108,11 @@ public class ChatbotApplication {
                 dadosRepository.mostrarCortes();
 
             } else if (input.contains("tchau") || input.contains("sair")) {
-                assert clienteEntity != null;
-                System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!" + clienteEntity.getNome());
+                if (clienteEntity != null) {
+                    System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia, " + clienteEntity.getNome());
+                } else {
+                    System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!");
+                }
                 break;
             }
             else{
