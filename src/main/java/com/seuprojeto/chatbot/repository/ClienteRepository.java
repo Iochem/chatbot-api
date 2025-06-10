@@ -18,7 +18,7 @@ public class ClienteRepository {
         clientesAgendados.put(nome, horarioMarcado);
     }
 
-    //Remove agendamento do map
+    //Remove agendamento do map caso verifique que ele exista no AgendamentoService
     public void removerCliente(String nome, String horarioCancelamento){
         clientesAgendados.remove(nome);;
     }

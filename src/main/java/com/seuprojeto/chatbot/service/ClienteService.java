@@ -30,7 +30,7 @@ public class ClienteService {
         clienteRepository.agendarCliente(nome, horarioMarcado);
     }
 
-    //Verifica se agendamento existe no map para ver se pode exclui-lo
+    //Verifica se agendamento existe no map para ver se pode cancela-lo e exclui-lo do map
     public boolean verificarExistenciaAgendamento(String cancelarAgendamento){
         Map<String, String> clientesAgendados = clienteRepository.getClientesAgendados();
 

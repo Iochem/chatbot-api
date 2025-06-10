@@ -85,18 +85,24 @@ public class ChatbotApplication {
                     break;
                 }
             } else if (input.contains("cancelar")) {
-                System.out.println("🤖 Chatbot: Informe o cliente e o horário agendado (Ex: Ana Dia 3 14h00):");
-                String cancelarAgendamento = scanner.nextLine().toLowerCase().trim();
+                while (true){
+                    //Para cancelar agendamento
+                    System.out.println("🤖 Chatbot: Informe o cliente e o horário agendado (Ex: Ana Dia 3 14h00):");
+                    System.out.println("ou ('voltar') para retornar ao menu:   ");
+                    String cancelarAgendamento = scanner.nextLine().toLowerCase().trim();
+
+                    if (cancelarAgendamento.equals("voltar")) break;
 
 
-                boolean cancelamentoFeito = clienteService.verificarExistenciaAgendamento(cancelarAgendamento);
-                // Se retornar true cancela
-                if (cancelamentoFeito) {
-                    System.out.println("🤖 Chatbot: Agendamento " + cancelarAgendamento + " cancelado");
-                } else {
-                    System.out.println("🤖 Chatbot: Agendamento não encontrado no sistema");
+                    boolean cancelamentoFeito = clienteService.verificarExistenciaAgendamento(cancelarAgendamento);
+                    // Se retornar true cancela
+                    if (cancelamentoFeito) {
+                        System.out.println("🤖 Chatbot: Agendamento " + cancelarAgendamento + " cancelado");
+                        break; //Se encontrar cancela
+                    } else {
+                        System.out.println("🤖 Chatbot: Agendamento não encontrado no sistema");
+                    }
                 }
-
             } else if (input.contains("preço") || input.contains("valor") || input.contains("cortes")) {
                 System.out.println("🤖 Chatbot: os preços são: ");
                 dadosRepository.mostrarCortes();
