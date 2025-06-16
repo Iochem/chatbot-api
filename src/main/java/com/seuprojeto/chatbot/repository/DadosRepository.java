@@ -1,7 +1,12 @@
 package com.seuprojeto.chatbot.repository;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.*;
 
+
+@Getter
 public class DadosRepository {
     private final Map<String, List<String>> diaHorario = new HashMap<>();
     private final List<String> cortes = new ArrayList<>();
@@ -13,16 +18,6 @@ public class DadosRepository {
         cortes.add("Corte simples");
         cortes.add("Corte com navalha");
         cortes.add("Barba");
-    }
-
-    // Gets e sets
-    //List<DiaHorarioDisponivel>
-    public Map<String, List<String>> getDiaHorario() {
-        return diaHorario;
-    }
-
-    public List<String> getCortes() {
-        return cortes;
     }
 
     //Metodo para mostrar os dias e horários disponíveis

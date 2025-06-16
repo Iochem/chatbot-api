@@ -1,13 +1,12 @@
 package com.seuprojeto.chatbot.service;
 
 import com.seuprojeto.chatbot.repository.DadosRepository;
+import lombok.RequiredArgsConstructor;
 
+
+@RequiredArgsConstructor
 public class AgendamentoService {
     private DadosRepository dadosRepository; //Usando isso essa classe tem acesso a tudo de dados
-
-    public AgendamentoService(DadosRepository dadosRepository){
-        this.dadosRepository = dadosRepository;
-    }
 
     // Verifica se o horário existe nos dados disponíveis
     public boolean validarDiaHorario(String escolha){

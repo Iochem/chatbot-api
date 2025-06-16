@@ -2,19 +2,16 @@ package com.seuprojeto.chatbot.service;
 
 import com.seuprojeto.chatbot.entity.ClienteEntity;
 import com.seuprojeto.chatbot.repository.ClienteRepository;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 import java.util.HashMap;
 
+@RequiredArgsConstructor
 //Coordena a lógica de uso de ClienteRepository e ClienteEntity.
 public class ClienteService {
     private ClienteRepository clienteRepository;
     private ClienteEntity clienteEntity;
-
-    public ClienteService(ClienteRepository clienteRepository){
-        this.clienteRepository = clienteRepository;
-        this.clienteEntity = clienteEntity;
-    }
 
     //Verifica se o nome e o horário escolhido existe no map, para poder agendar
     public boolean validarCliente(String nome, String horarioMarcado ) {
