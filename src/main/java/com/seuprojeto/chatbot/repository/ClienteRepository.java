@@ -5,6 +5,7 @@ import com.seuprojeto.chatbot.entity.ClienteEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 @Getter
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Repository
 public class ClienteRepository {
     private final Map<String, String> clientesAgendados = new HashMap<>();
     private ClienteEntity clienteEntity;

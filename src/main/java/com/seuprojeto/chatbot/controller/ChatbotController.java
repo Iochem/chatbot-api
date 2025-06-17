@@ -8,8 +8,12 @@ import com.seuprojeto.chatbot.repository.DadosRepository;
 import com.seuprojeto.chatbot.service.AgendamentoService;
 import com.seuprojeto.chatbot.service.ClienteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+//import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
+@Component
+//@RestController - futuramente
 public class ChatbotController {
     private final Scanner scanner = new Scanner(System.in);
 

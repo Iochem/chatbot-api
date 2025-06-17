@@ -2,9 +2,11 @@ package com.seuprojeto.chatbot.service;
 
 import com.seuprojeto.chatbot.repository.DadosRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 
 @RequiredArgsConstructor
+@Service
 public class AgendamentoService {
     private DadosRepository dadosRepository; //Usando isso essa classe tem acesso a tudo de dados
 

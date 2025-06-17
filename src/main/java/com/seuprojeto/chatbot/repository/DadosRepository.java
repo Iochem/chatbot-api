@@ -2,11 +2,13 @@ package com.seuprojeto.chatbot.repository;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 
 @Getter
+@Repository
 public class DadosRepository {
     private final Map<String, List<String>> diaHorario = new HashMap<>();
     private final List<String> cortes = new ArrayList<>();

@@ -3,11 +3,13 @@ package com.seuprojeto.chatbot.service;
 import com.seuprojeto.chatbot.entity.ClienteEntity;
 import com.seuprojeto.chatbot.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.HashMap;
 
 @RequiredArgsConstructor
+@Service
 //Coordena a lógica de uso de ClienteRepository e ClienteEntity.
 public class ClienteService {
     private ClienteRepository clienteRepository;
