@@ -21,9 +21,8 @@ public class ChatbotController {
     private final AgendamentoService agendamentoService;
     private final ClienteRepository clienteRepository;
     private final ClienteService clienteService;
-    private final ClienteEntity clienteEntity;
 
-
+    private String nomeClienteAtual;
 
     public void iniciarAtendimento() {
         System.out.println("🤖 Chatbot: Olá! Bem-vindo à barbearia.");
@@ -62,6 +61,7 @@ public class ChatbotController {
     private void realizarAgendamento() {
         System.out.print("Informe seu nome: ");
         String nomeCliente = scanner.nextLine().trim().toLowerCase();
+        nomeClienteAtual = nomeCliente;
 
         while (true) {
             System.out.println("\nDigite um dia e horário (ex: 'Dia 3 14h00') para marcar  ");
@@ -86,6 +86,7 @@ public class ChatbotController {
             }
 
             //Adicionar os dados as classes
+            ClienteEntity clienteEntity = new ClienteEntity(); // criado dinamicamente
             clienteEntity.setNome(nomeCliente);
             clienteEntity.setHorarioMarcado(escolha);
             clienteService.adicionarCliente(nomeCliente, escolha);
@@ -113,8 +114,8 @@ public class ChatbotController {
     }
 
     private void sairAtendimento() {
-        if (clienteEntity != null) {
-            System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia, " + clienteEntity.getNome());
+        if (nomeClienteAtual!= null) {
+            System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia, " + nomeClienteAtual);
         } else {
             System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!");
         }

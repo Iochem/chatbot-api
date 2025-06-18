@@ -12,8 +12,8 @@ import java.util.HashMap;
 @Service
 //Coordena a lógica de uso de ClienteRepository e ClienteEntity.
 public class ClienteService {
-    private ClienteRepository clienteRepository;
-    private ClienteEntity clienteEntity;
+    private final ClienteRepository clienteRepository;
+    private final ClienteEntity clienteEntity;
 
     //Verifica se o nome e o horário escolhido existe no map, para poder agendar
     public boolean validarCliente(String nome, String horarioMarcado ) {

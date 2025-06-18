@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class AgendamentoService {
-    private DadosRepository dadosRepository; //Usando isso essa classe tem acesso a tudo de dados
+    private final DadosRepository dadosRepository; //Usando isso essa classe tem acesso a tudo de dados
 
     // Verifica se o horário existe nos dados disponíveis
     public boolean validarDiaHorario(String escolha){
