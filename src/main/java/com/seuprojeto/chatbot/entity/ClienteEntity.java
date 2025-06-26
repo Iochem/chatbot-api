@@ -1,6 +1,6 @@
 package com.seuprojeto.chatbot.entity;
 
-//import java.util.UUID;
+import java.util.UUID;
 
 //import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 //@Entity - futuramente
 public class ClienteEntity { //Classe que vai receber o nome e o horarioMarcado
     //@Id
-    //private final UUID id;
+    private  UUID id;
     private String nome;
     private String horarioMarcado;
 

@@ -7,6 +7,7 @@ import com.seuprojeto.chatbot.repository.ClienteRepository;
 import com.seuprojeto.chatbot.repository.DadosRepository;
 import com.seuprojeto.chatbot.service.AgendamentoService;
 import com.seuprojeto.chatbot.service.ClienteService;
+import com.seuprojeto.chatbot.view.ChatView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 //import org.springframework.web.bind.annotation.RestController;
@@ -17,22 +18,23 @@ import org.springframework.stereotype.Component;
 public class ChatbotController {
     private final Scanner scanner = new Scanner(System.in);
 
+    private String nomeAgendamento;
+
+    //Instanciação dos objetos
+    private final ChatView chatView;
     private final DadosRepository dadosRepository;
     private final AgendamentoService agendamentoService;
     private final ClienteRepository clienteRepository;
     private final ClienteService clienteService;
+    private final ClienteEntity clienteEntity;
 
-    private String nomeClienteAtual;
 
     public void iniciarAtendimento() {
-        System.out.println("🤖 Chatbot: Olá! Bem-vindo à barbearia.");
-        System.out.println("Digite 'sair' caso queira encerrar o atendimento.");
-        String input;
+        chatView.mostrarMensagem("Olá! Bem-vindo à barbearia.");
 
         while (true) {
-            System.out.println("🤖 Chatbot: Como posso ajudar você?");
-            System.out.print("Você: ");
-            input = scanner.nextLine().toLowerCase().trim();
+            chatView.mostrarMenu();
+            String input = chatView.lerMensagem();
 
             if (input.contains("dia") || input.contains("hora") || input.contains("horário")) {
                 mostrarDiasHorarios();
@@ -46,7 +48,7 @@ public class ChatbotController {
                 sairAtendimento();
                 break;
             } else {
-                mensagemNaoEntendi();
+                chatView.mensagemNaoEntendi();
             }
         }
     }
@@ -54,19 +56,18 @@ public class ChatbotController {
     // Métodos separados para cada funcionalidade
 
     private void mostrarDiasHorarios() {
-        System.out.println("🤖 Chatbot: Temos os seguintes dias e horários disponíveis:");
+        chatView.mostrarMensagem("Temos os seguintes dias e horários disponíveis:");
         dadosRepository.mostrarDiasHorarios();
     }
 
     private void realizarAgendamento() {
-        System.out.print("Informe seu nome: ");
-        String nomeCliente = scanner.nextLine().trim().toLowerCase();
-        nomeClienteAtual = nomeCliente;
+        chatView.mostrarMensagem("Informe seu nome: ");
+        String nomeCliente = chatView.lerMensagem();
 
         while (true) {
-            System.out.println("\nDigite um dia e horário (ex: 'Dia 3 14h00') para marcar  ");
-            System.out.print("ou ('voltar') para retornar ao menu:");
-            String escolha = scanner.nextLine().toLowerCase().trim();
+            chatView.mostrarMensagem("Digite um dia e horário (ex: 'Dia 3 14h00') para marcar");
+            chatView.mostrarMensagem("ou ('voltar') para retornar ao menu:");
+            String escolha = chatView.lerMensagem();
 
             if (escolha.equals("voltar")) break;
 
@@ -85,45 +86,44 @@ public class ChatbotController {
                 continue;
             }
 
-            //Adicionar os dados as classes
-            ClienteEntity clienteEntity = new ClienteEntity(); // criado dinamicamente
+            //Criar o objeto de ClienteService
             clienteEntity.setNome(nomeCliente);
+            //Adicionar dados as classes
             clienteEntity.setHorarioMarcado(escolha);
             clienteService.adicionarCliente(nomeCliente, escolha);
-            System.out.println("✅ Agendamento confirmado para " + escolha);
+            chatView.mostrarMensagem("✅ Agendamento confirmado para " + escolha);
+            nomeAgendamento = nomeCliente;
             break;
         }
     }
 
     private void mostrarPrecos() {
-        System.out.println("🤖 Chatbot: Os preços são:");
+        chatView.mostrarMensagem("Temos os segunites cortes disponíveis:");
         dadosRepository.mostrarCortes();
     }
 
     private void cancelarAgendamento() {
-        System.out.println("🤖 Chatbot: Informe o cliente e o horário agendado (Ex: Ana Dia 3 14h00):");
-        String cancelarAgendamento = scanner.nextLine().toLowerCase().trim();
+        chatView.mostrarMensagem("Informe o cliente e o horário agendado (Ex: Ana Dia 3 14h00):");
+        String cancelarAgendamento = chatView.lerMensagem();
 
         boolean cancelamentoFeito = clienteService.verificarExistenciaAgendamento(cancelarAgendamento);
         // Se retornar true cancela
         if (cancelamentoFeito) {
-            System.out.println("🤖 Chatbot: Agendamento " + cancelarAgendamento + " cancelado");
+            chatView.mostrarMensagem("Agendamento " + cancelarAgendamento + " cancelado");
         } else {
-            System.out.println("🤖 Chatbot: Agendamento não encontrado no sistema");
+            chatView.mostrarMensagem("Agendamento não encontrado no sistema");
         }
     }
 
     private void sairAtendimento() {
-        if (nomeClienteAtual!= null) {
-            System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia, " + nomeClienteAtual);
+        //chatView.encerrarComAgendamento(nomeAgendamento);
+        if (clienteEntity != null) {
+            chatView.encerrarComAgendamento(nomeAgendamento);
         } else {
-            System.out.println("🤖 Chatbot: Até mais! Tenha um ótimo dia!");
+            chatView.encerrarSemAgendamento();
         }
-        scanner.close();  // fecha o scanner corretamente
-    }
-
-    private void mensagemNaoEntendi() {
-        System.out.println("🤖 Chatbot: Desculpe, não entendi. Pode reformular?");
+        chatView.fechamento();
     }
 }
+
 
