@@ -2,8 +2,6 @@ package com.seuprojeto.chatbot;
 
 import com.seuprojeto.chatbot.controller.ChatbotController;
 
-import com.seuprojeto.chatbot.controller.ChatbotController;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
