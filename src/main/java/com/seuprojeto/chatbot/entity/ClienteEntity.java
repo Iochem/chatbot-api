@@ -1,23 +1,26 @@
 package com.seuprojeto.chatbot.entity;
 
-//import java.util.UUID;
-
-//import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
-//import lombok.Getter;
 
 @Setter
 @Getter
 @NoArgsConstructor
-@Component
+@AllArgsConstructor
+@Entity
+@Table(name = "clientes")
 //@Entity - futuramente
 public class ClienteEntity { //Classe que vai receber o nome e o horarioMarcado
-    //@Id
-    //private final UUID id;
-    private String nome;
-    private String horarioMarcado;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Será gerado automaticamente pelo banco
+    private Long id;
 
+    @Column(nullable = false)
+    private String nome;
+
+    @Column(nullable = false, unique = true) //Campo não pode ser nulo nem repetido
+    private String horarioMarcado;
 }
