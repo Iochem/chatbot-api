@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "horarios")
-public class HorarioDisponivelEntity {
+public class HorarioDisponivelEntity { //Irá armazenar os dias e horários disponíveis para marcar
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

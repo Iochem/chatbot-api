@@ -9,9 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ClienteDTO {
-    //@Id
-    //private final UUID id;
+
+    private Long id;
+
     private String nome;
+
     private String horarioMarcado;
 
 }
