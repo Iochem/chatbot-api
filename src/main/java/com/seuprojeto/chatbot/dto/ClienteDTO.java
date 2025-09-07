@@ -10,10 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ClienteDTO {
 
-    private Long id;
-
+    Long id;
     private String nome;
-
-    private String horarioMarcado;
+    private String dataHoraAgendamento;
 
 }
