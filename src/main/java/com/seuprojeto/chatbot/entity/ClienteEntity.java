@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -22,5 +24,5 @@ public class ClienteEntity { //Classe que vai receber o nome e o horarioMarcado
     private String nome;
 
     @Column(nullable = false, unique = true) //Campo não pode ser nulo nem repetido
-    private String dataHoraAgendamento;
+    private LocalDateTime dataHoraAgendamento;
 }
