@@ -1,0 +1,31 @@
+package com.seuprojeto.chatbot.service;
+
+import com.seuprojeto.chatbot.entity.ClienteEntity;
+import com.seuprojeto.chatbot.repository.ClienteRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.Map;
+import java.util.HashMap;
+
+@RequiredArgsConstructor
+@Service
+//Coordena a lógica de uso de ClienteRepository e ClienteEntity.
+public class ClienteService {
+    private final DadosRepository dadosRepository; //Usando isso essa classe tem acesso a tudo de dados
+
+    // Verifica se o horário existe nos dados disponíveis
+    public boolean validarDiaHorario(String escolha){
+        for(String chave : dadosRepository.getDiaHorario().keySet()){
+            for(String valor : dadosRepository.getDiaHorario().get(chave)){
+                String horarioCompleto = (chave + " " + valor).toLowerCase().trim();
+                if(escolha.equals(horarioCompleto)){
+                    return true;
+                }
+            }}
+        System.out.println("❌ Horário indisponível.");
+        return false;  // retorna false após verificar todos os horários
+    }
+
+}
+
