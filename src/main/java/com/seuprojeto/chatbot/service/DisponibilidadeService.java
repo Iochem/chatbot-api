@@ -1,31 +1,47 @@
 package com.seuprojeto.chatbot.service;
 
-import com.seuprojeto.chatbot.entity.ClienteEntity;
-import com.seuprojeto.chatbot.repository.ClienteRepository;
+import com.seuprojeto.chatbot.entity.HorarioDisponivelEntity;
+import com.seuprojeto.chatbot.repository.HorarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-//Coordena a lógica de uso de ClienteRepository e ClienteEntity.
-public class ClienteService {
-    private final DadosRepository dadosRepository; //Usando isso essa classe tem acesso a tudo de dados
+public class DisponibilidadeService { //Vai conter a lógica de verificação e atualização dos dias e horarios
+    private HorarioRepository horarioRepo;
 
-    // Verifica se o horário existe nos dados disponíveis
-    public boolean validarDiaHorario(String escolha){
-        for(String chave : dadosRepository.getDiaHorario().keySet()){
-            for(String valor : dadosRepository.getDiaHorario().get(chave)){
-                String horarioCompleto = (chave + " " + valor).toLowerCase().trim();
-                if(escolha.equals(horarioCompleto)){
-                    return true;
-                }
-            }}
-        System.out.println("❌ Horário indisponível.");
-        return false;  // retorna false após verificar todos os horários
+    //Mostrar todos os horarios disponíveis
+    public List<HorarioDisponivelEntity> MostrarDiasHorariosLivres() {
+        return horarioRepo.findByDisponivelTrue();
     }
 
-}
+    //Verifica se dia e horário está disponível para o ClienteService adicionar ao banco
+    public Boolean isDisponivel(LocalDate dia, LocalTime hora) {
+        return horarioRepo.findByDiaAndHorarioAndDisponivelTrue(dia, hora) // Busca no banco
+                .map(entity -> { // se existir, executa esta ação
+                    entity.setDisponivel(false); // marca como ocupado
+                    horarioRepo.save(entity);    // salva a alteração
+                    disponibilidadeDia(dia);     // atualiza status do dia
+                    return true;
+                })
+                .orElse(false);  // retorna false se não encontrou horário disponível
+    }
 
+    public boolean isOcupado(LocalDate dia, LocalTime hora) {
+        // Busca todos os horários ocupados nesse dia e filtra
+        return horarioRepo.findByDiaAndDisponivelFalse(dia).stream()
+                .filter(h -> h.getHorario().equals(hora))
+                .findFirst() // retorna Optional<HorarioDisponivelEntity>- 1° constado
+                .map(h -> { // se existir, executa ação e retorna true
+                    h.setDisponivel(true);
+                    horarioRepo.save(h);
+                    disponibilidadeDia(dia);
+                    return true;
+                })
+                .orElse(false); // se não existir, retorna false
+    }
+}
