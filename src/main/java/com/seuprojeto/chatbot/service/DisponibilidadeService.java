@@ -44,4 +44,21 @@ public class DisponibilidadeService { //Vai conter a lógica de verificação e 
                 })
                 .orElse(false); // se não existir, retorna false
     }
+
+    public void disponibilidadeDia(LocalDate dia) {
+        //Checa existência de horários livres e status atual do dia
+        boolean horariosDispo = horarioRepo.existsByDiaAndDisponivelTrue(dia);
+        HorarioDisponivelEntity diaEntidade = horarioRepo.findFirstByDia(dia).get(); //Pega o 1° registro
+        boolean diaDispo = diaEntidade.isDisponivel();
+
+        if (!horariosDispo && diaDispo) {
+            diaEntidade.setDisponivel(false);
+            horarioRepo.save(diaEntidade); // Todos os horários ocupados → marca dia como indisponível
+        } else if (horariosDispo && !diaDispo) {
+            diaEntidade.setDisponivel(true); // Algum horário livre → marca dia como disponível
+            horarioRepo.save(diaEntidade);
+        }
+    }
 }
+
+
