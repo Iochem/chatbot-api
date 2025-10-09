@@ -4,6 +4,7 @@ import com.seuprojeto.chatbot.entity.HorarioDisponivelEntity;
 import com.seuprojeto.chatbot.repository.HorarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,6 +20,7 @@ public class DisponibilidadeService { //Vai conter a lógica de verificação e 
         return horarioRepo.findByDisponivelTrue();
     }
 
+    @Transactional
     //Verifica se dia e horário está disponível para o ClienteService adicionar ao banco
     public Boolean isDisponivel(LocalDate dia, LocalTime hora) {
         return horarioRepo.findByDiaAndHorarioAndDisponivelTrue(dia, hora) // Busca no banco
@@ -31,6 +33,7 @@ public class DisponibilidadeService { //Vai conter a lógica de verificação e 
                 .orElse(false);  // retorna false se não encontrou horário disponível
     }
 
+    @Transactional
     public boolean isOcupado(LocalDate dia, LocalTime hora) {
         // Busca todos os horários ocupados nesse dia e filtra
         return horarioRepo.findByDiaAndDisponivelFalse(dia).stream()
@@ -45,6 +48,7 @@ public class DisponibilidadeService { //Vai conter a lógica de verificação e 
                 .orElse(false); // se não existir, retorna false
     }
 
+    @Transactional
     public void disponibilidadeDia(LocalDate dia) {
         //Checa existência de horários livres e status atual do dia
         boolean horariosDispo = horarioRepo.existsByDiaAndDisponivelTrue(dia);

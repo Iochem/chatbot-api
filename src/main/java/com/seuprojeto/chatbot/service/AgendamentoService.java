@@ -6,6 +6,7 @@ import com.seuprojeto.chatbot.mapper.ClienteMapper;
 import com.seuprojeto.chatbot.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class AgendamentoService {
     private final ClienteMapper mapper;
     private final DisponibilidadeService disponibilidadeServ;
 
+    @Transactional //Se ocorrer um erro, a operação não é salva
     public ClienteDTO agendarHorario(ClienteDTO dto) {
         // Separa dia e hora só para verificar disponibilidade
         LocalDateTime agendamentoDataHora = dto.getDataHoraAgendamento();
@@ -30,12 +32,9 @@ public class AgendamentoService {
 
         if(!existe)throw new RuntimeException("Horário ocupado ou inexistente!");
 
-        // Converte para entidade via Mapper
-        ClienteEntity cliente = mapper.toEntity(dto);
-        // Salva no banco
-        clienteRepo.save(cliente);
-        //Converte de volta para dto
-        return mapper.toDTO(cliente);
+        ClienteEntity cliente = mapper.toEntity(dto); // Converte para entidade via Mapper
+        clienteRepo.save(cliente);// Salva no banco
+        return mapper.toDTO(cliente); //Converte de volta para dto
     }
 
     public String cancelarHorario(ClienteDTO dto){
