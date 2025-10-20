@@ -1,44 +1,32 @@
 # API Chatbot Atendimentos #
-- Este é um projeto em Java para um chatbot de atendimento automatizado, voltado para agendamento de horários em uma barbearia. A API permite visualizar horários disponíveis, realizar agendamentos, cancelar agendamentos e consultar os preços dos serviços.
+Este é um projeto em Java para um chatbot de atendimento automatizado, voltado para agendamento de horários em uma barbearia. A API permite visualizar horários disponíveis, realizar e cancelar agendamentos.
 
-**Fluxo do sistema:**  `Controller → DTO → Service → Repository → Entity`
+Fluxo: `Controller → ClienteDTO → ClienteService → ClienteRepository → Map`
 
----
-## Status
-🟡 Em desenvolvimento
+##  Funcionalidades
+- Exposição de serviços via API REST com `@RestController`
+- Operações `HTTP` `GET`, `POST` e `DELETE` para agendar, cancelar e listar horários
+- Envio e recebimento de dados em JSON com validação automática (`@Valid`)
+- Controle de disponibilidade de horários com atualização dinâmica (livre/ocupado) 
+- Persistência de dados com `Spring Data JPA` e `entidades` para clientes e horários
+- Conversão entre `DTOs` e `entidades` usando `Mappers` 
+- Inicialização automática do banco com horários pré-cadastrados
+- `Mensagens HTTP` adequadas e tratadores globais de exceção (em desenvolvimento)
 
----
+
 ## Tecnologias 
-- Java 17
-- Maven
+- Java 17+
+- Spring Boot
+- Spring Data JPA
+- Hibernate
 - PostgreSQL
-- IntelliJ IDEA
-- Spring Boot 
+- Bean Validation 
+- Maven
 - Lombok
-- Padrão MVC (Entity - View - Controller)
-- Injeção de dependência com Spring
+
+- IntelliJ IDEA
 
 
----
-## Funcionalidades
-- Ver dias e horários disponíveis para agendamento
-- Realizar agendamentos e cancelamentos com validação de horários e nomes
-- Exibir mensagens de forma interativa via terminal
-- Separação clara por camadas (entidade, serviço, repositório e visualização)
-- Armazenamento dos agendamentos usando o banco de dados PostgreSQL
-- Estrutura modular: `Entity`, `Service`, `Repository`, `DTO`, `Mapper` e `View`
-
-
----
-##  Futuras Melhorias
-- Criar uma API REST (`@RestController`) para expor os serviços via HTTP
-- Utilizar requisições HTTP com `GET`, `POST`, `DELETE`, etc.
-- Utilizar `@RequestBody` e `@ResponseBody` para enviar/receber JSON
-- Implementar tratadores globais de exceção (@ControllerAdvice)
-- Criar endpoints para agendamento, cancelamento, listagem e visualização
-
-
----
 ## Como executar
 
 1. Clone o repositório:
